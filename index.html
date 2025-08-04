@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITIL 4 Basics - Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">ITIL 4 Basics Learning Platform</h1>
+                    <p class="text-gray-600 mt-2">Master ITIL 4 fundamentals with structured daily learning. Pass assessments to unlock next day automatically!</p>
+                </div>
+                <div class="text-right space-y-2">
+                    <div class="bg-blue-100 px-4 py-2 rounded-lg">
+                        <span class="text-blue-800 font-semibold">Daily Study Time: 2 Hours</span>
+                    </div>
+                    <div class="bg-blue-100 px-4 py-2 rounded-lg border border-blue-200">
+                        <div class="flex items-center">
+                            <i class="fas fa-clipboard-check text-blue-600 mr-2"></i>
+                            <span class="text-blue-800 font-semibold text-sm">Assessment Required Each Day</span>
+                        </div>
+                        <div class="text-xs text-blue-700 mt-1">20 Questions • 70% to Pass • Auto-unlock Next Day • 2h Study Break if Failed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Overview -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Learning Progress</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-calendar-check text-green-600 text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-green-800">Days Completed</h3>
+                            <p class="text-2xl font-bold text-green-600" id="completedDays">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-blue-600 text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-blue-800">Total Hours</h3>
+                            <p class="text-2xl font-bold text-blue-600" id="totalHours">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-trophy text-purple-600 text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-purple-800">Assessments Passed</h3>
+                            <p class="text-2xl font-bold text-purple-600" id="assessmentsPassed">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Days -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="learningDays">
+            <!-- Days will be populated by JavaScript -->
+        </div>
+
+        <!-- Assessment Modal -->
+        <div id="assessmentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800" id="assessmentTitle">Assessment</h2>
+                            <button onclick="closeAssessment()" class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
+                                    <span class="text-yellow-800">Answer all 20 questions. You need 70% (14/20) to pass and proceed to the next day.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="assessmentContent">
+                            <!-- Assessment questions will be populated here -->
+                        </div>
+
+                        <div class="flex justify-between items-center mt-6">
+                            <div class="text-sm text-gray-600">
+                                Time remaining: <span id="timeRemaining" class="font-semibold">20:00</span>
+                            </div>
+                            <button onclick="submitAssessment()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                                Submit Assessment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Modal -->
+        <div id="resultsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                    <div class="p-6 text-center">
+                        <div id="resultsIcon" class="text-6xl mb-4"></div>
+                        <h2 id="resultsTitle" class="text-2xl font-bold mb-4"></h2>
+                        <p id="resultsMessage" class="text-gray-600 mb-6"></p>
+                        <div id="resultsScore" class="text-4xl font-bold mb-6"></div>
+                        <button onclick="closeResults()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="curriculum.js"></script>
+    <script src="assessments.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
